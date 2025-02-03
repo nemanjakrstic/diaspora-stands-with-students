@@ -4,7 +4,6 @@ import { IconHeartFilled } from "@tabler/icons-react";
 import Map, { AttributionControl, Layer, MapRef, Marker, Source } from "@vis.gl/react-maplibre";
 import { useEffect, useRef, useState } from "react";
 import { InstagramEmbed } from "react-social-media-embed";
-import { getUserPosition } from "../bootstrap";
 import { Event, Place, places } from "../data";
 import { createArc, LngLatLite } from "../utils/geojson";
 import { mapStyle } from "../utils/map";
