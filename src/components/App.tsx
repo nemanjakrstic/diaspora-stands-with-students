@@ -35,6 +35,7 @@ export const App = () => {
     });
 
     socket.on("love", (data: { lng: number; lat: number; count: number }) => {
+      positionIndex = 0;
       setCount(data.count);
       setLoveMarkerPositions(createArc(data, STUDENTS).geometry.coordinates);
     });
@@ -66,9 +67,7 @@ export const App = () => {
   }, [loveMarkerPositions]);
 
   const sendLove = () => {
-    const position = getUserPosition() ?? (mapRef.current?.getMap().getBounds().getSouthEast() as LngLatLite);
-    positionIndex = 0;
-    setLoveMarkerPositions(createArc(position, STUDENTS).geometry.coordinates);
+    socket.emit("love");
   };
 
   const selectPlace = (place: Place) => {
@@ -93,7 +92,7 @@ export const App = () => {
         </Stack>
       </Modal>
 
-      <HeartIcon count={count} onClick={() => sendLove()} />
+      <HeartIcon count={count} onClick={sendLove} />
 
       <Layout onSelect={selectPlace}>
         <Map
