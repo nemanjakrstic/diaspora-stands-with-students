@@ -34,7 +34,11 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <IconHeartFilled color={theme.colors.red[7]} size={30} />
 
-          <Text size="xl" fw={900}>
+          <Text size="xl" fw={900} visibleFrom="sm">
+            Diaspora Stands with Students
+          </Text>
+
+          <Text size="md" fw={900} hiddenFrom="sm">
             Diaspora Stands with Students
           </Text>
         </Group>
