@@ -35,7 +35,7 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
           <IconHeartFilled color={theme.colors.red[7]} size={30} />
 
           <Text size="xl" fw={900}>
-            Dijaspora uz studente
+            Diaspora Stands with Students
           </Text>
         </Group>
       </AppShell.Header>
