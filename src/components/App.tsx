@@ -10,11 +10,11 @@ import { mapStyle } from "../utils/map";
 import { Layout } from "./Layout";
 import { socket } from "../socket";
 import { useStore } from "../store";
+import { LngLatBounds } from "maplibre-gl";
+import { useAnimatedMarkers } from "../hooks/useAnimatedMarkers";
 
 const MIN_ZOOM = 1;
 const STUDENTS: LngLatLite = { lng: 19.82974214457107, lat: 45.26535625358795 };
-
-let positionIndex = 0;
 
 export const App = () => {
   const theme = useMantineTheme();
@@ -25,49 +25,44 @@ export const App = () => {
   const [selectedEvent, setSelectedEvent] = useState<Event>();
   const [debouncedUrl] = useDebouncedValue(selectedEvent?.url, 100);
   const mapRef = useRef<MapRef>(null);
-  const [loveMarkerPositions, setLoveMarkerPositions] = useState<number[][]>();
-  const [currentLoveMarkerPosition, setCurrentLoveMarkerPosition] = useState<number[]>();
-  const animationFrameId = useRef<number | null>(null);
+  const addAnimatedMarker = useAnimatedMarkers();
 
-  useEffect(() => {
-    socket.on("count", (data: number) => {
-      setCount(data);
-    });
+  // useEffect(() => {
+  //   socket.on("count", (data: number) => {
+  //     setCount(data);
+  //   });
 
-    socket.on("love", (data: { lng: number; lat: number; count: number }) => {
-      positionIndex = 0;
-      setCount(data.count);
-      setLoveMarkerPositions(createArc(data, STUDENTS).geometry.coordinates);
-    });
+  //   socket.on("love", (data: { lng: number; lat: number; count: number }) => {
+  //     positionIndex = 0;
+  //     setCount(data.count);
+  //     setLoveMarkerPositions(createArc(data, STUDENTS).geometry.coordinates);
+  //   });
 
-    return () => {
-      socket.off("count");
-      socket.off("love");
-    };
-  }, []);
-
-  useEffect(() => {
-    const update = () => {
-      if (!loveMarkerPositions || positionIndex >= loveMarkerPositions.length) {
-        return;
-      }
-
-      positionIndex += 15;
-      setCurrentLoveMarkerPosition(loveMarkerPositions[positionIndex]);
-      animationFrameId.current = requestAnimationFrame(update);
-    };
-
-    animationFrameId.current = requestAnimationFrame(update);
-
-    return () => {
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
-    };
-  }, [loveMarkerPositions]);
+  //   return () => {
+  //     socket.off("count");
+  //     socket.off("love");
+  //   };
+  // }, []);
 
   const sendLove = () => {
-    socket.emit("love");
+    // socket.emit("love");
+
+    const map = mapRef.current?.getMap();
+
+    if (map) {
+      addAnimatedMarker(map, map.getBounds().getSouthEast(), STUDENTS);
+
+      const bounds = new LngLatBounds();
+      bounds.extend(map.getBounds().getSouthEast().toArray());
+      bounds.extend([STUDENTS.lng, STUDENTS.lat]);
+
+      // Fit the map to the bounds with optional padding
+      map.fitBounds(bounds, {
+        padding: 50, // Adds padding around the edges (optional)
+        // maxZoom: 15, // Prevents zooming in too much (optional)
+        duration: 1000, // Animation duration in ms (optional)
+      });
+    }
   };
 
   const selectPlace = (place: Place) => {
@@ -131,12 +126,6 @@ export const App = () => {
           <Marker longitude={STUDENTS.lng} latitude={STUDENTS.lat}>
             <IconHeartFilled cursor="pointer" color={theme.colors.red[7]} size={48} />
           </Marker>
-
-          {currentLoveMarkerPosition ? (
-            <Marker longitude={currentLoveMarkerPosition[0]} latitude={currentLoveMarkerPosition[1]}>
-              <IconHeartFilled cursor="pointer" color={theme.colors.red[7]} size={32} />
-            </Marker>
-          ) : null}
         </Map>
       </Layout>
     </>
