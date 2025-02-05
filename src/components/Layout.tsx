@@ -6,15 +6,23 @@ import {
   Input,
   NavLink,
   ScrollArea,
+  Select,
   Stack,
   Text,
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { IconHeartFilled } from "@tabler/icons-react";
 import { matchSorter } from "match-sorter";
 import { ReactNode, useMemo, useState } from "react";
 import { Place, places } from "../data";
-import { IconHeartFilled } from "@tabler/icons-react";
+import { useStore } from "../store";
+import { LanguageCode, messages } from "../messages";
+
+const languages = Object.keys(messages).map((language) => ({
+  value: language,
+  label: messages[language as LanguageCode].language,
+}));
 
 interface LayoutProps {
   children: ReactNode;
@@ -23,6 +31,9 @@ interface LayoutProps {
 
 export const Layout = ({ children, onSelect }: LayoutProps) => {
   const theme = useMantineTheme();
+  const t = useStore((state) => state.messages);
+  const setLanguage = useStore((state) => state.setLanguage);
+  const language = useStore((state) => state.language);
   const [opened, { toggle, close }] = useDisclosure(false);
   const [search, setSearch] = useState("");
   const visiblePlaces = useMemo(() => matchSorter(places, search, { keys: ["title"] }), [search]);
@@ -35,18 +46,26 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
           <IconHeartFilled color={theme.colors.red[7]} size={30} />
 
           <Text size="xl" fw={900} visibleFrom="sm">
-            Diaspora Stands with Students
+            {t.title}
           </Text>
 
           <Text size="md" fw={900} hiddenFrom="sm">
-            Diaspora Stands with Students
+            {t.title}
           </Text>
+
+          <Select
+            ml="auto"
+            placeholder="Pick value"
+            value={language}
+            data={languages}
+            onChange={(language) => setLanguage(language as LanguageCode)}
+          />
         </Group>
       </AppShell.Header>
 
       <AppShell.Navbar>
         <Stack p="md">
-          <Input placeholder="Pronađi mesto..." value={search} onChange={(e) => setSearch(e.currentTarget.value)} />
+          <Input placeholder={`${t.filter}...`} value={search} onChange={(e) => setSearch(e.currentTarget.value)} />
         </Stack>
 
         <ScrollArea>

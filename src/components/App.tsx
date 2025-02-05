@@ -9,6 +9,7 @@ import { createArc, LngLatLite } from "../utils/geojson";
 import { mapStyle } from "../utils/map";
 import { Layout } from "./Layout";
 import { socket } from "../socket";
+import { useStore } from "../store";
 
 const MIN_ZOOM = 1;
 const STUDENTS: LngLatLite = { lng: 19.82974214457107, lat: 45.26535625358795 };
@@ -143,30 +144,16 @@ export const App = () => {
 };
 
 const HeartIcon = ({ count, onClick }: { count: number; onClick: () => void }) => {
-  return (
-    <Tooltip label="Klikni da pošalješ studentima srce" position="bottom" withArrow>
-      {/* <ActionIcon
-        onClick={onClick}
-        style={{ zIndex: 1000 }}
-        pos="fixed"
-        bottom={10}
-        right={10}
-        variant="gradient"
-        size="xl"
-        aria-label="Pošalji podršku studentima"
-        gradient={{ from: "red.7", to: "red.9", deg: 90 }}
-      >
-        <Group>
-          <Text>{count}</Text> <IconHeartFilled />
-        </Group>
-      </ActionIcon> */}
+  const t = useStore((state) => state.messages);
 
+  return (
+    <Tooltip label={t.click_to_show_support} position="bottom" withArrow>
       <Button.Group style={{ zIndex: 1000 }} pos="fixed" bottom={10} right={10}>
-        <Button.GroupSection variant="default" bg="var(--mantine-color-body)" miw={60}>
+        <Button.GroupSection size="lg" variant="default" bg="var(--mantine-color-body)" miw={60}>
           {count}
         </Button.GroupSection>
 
-        <Button variant="default" radius="md" onClick={onClick}>
+        <Button size="lg" variant="default" radius="md" onClick={onClick}>
           <IconHeartFilled color="red" />
         </Button>
       </Button.Group>
