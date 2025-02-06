@@ -14,7 +14,7 @@ import { mapStyle } from "../utils/map";
 import { Layout } from "./Layout";
 
 const MIN_ZOOM = 1;
-const MAX_ZOOM = 5;
+const MAX_ZOOM = 7;
 
 const STUDENTS: LngLatLite = { lng: 20.2576633, lat: 44.8152408 };
 
