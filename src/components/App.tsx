@@ -126,7 +126,7 @@ export const App = () => {
 
         <p>
           <small>
-            Ovaj projekat je open-source. Znas da programiraš? Posalji nam PR na{" "}
+            Ovaj projekat je open-source. Znas da programiraš? Pošalji nam PR na{" "}
             <a target="_blank" href="https://github.com/nemanjakrstic/diaspora-stands-with-students">
               GitHub
             </a>
