@@ -14,7 +14,9 @@ import { mapStyle } from "../utils/map";
 import { Layout } from "./Layout";
 
 const MIN_ZOOM = 1;
-const STUDENTS: LngLatLite = { lng: 19.82974214457107, lat: 45.26535625358795 };
+const MAX_ZOOM = 5;
+
+const STUDENTS: LngLatLite = { lng: 20.2576633, lat: 44.8152408 };
 
 interface BasePayload {
   id: string;
@@ -142,7 +144,9 @@ export const App = () => {
           style={{ height: "calc(100vh - 60px)" }}
           attributionControl={false}
           {...viewState}
-          onMove={({ viewState }) => setViewState({ ...viewState, zoom: Math.max(MIN_ZOOM, viewState.zoom) })}
+          onMove={({ viewState }) =>
+            setViewState({ ...viewState, zoom: Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, viewState.zoom)) })
+          }
         >
           <AttributionControl position="top-right" />
 
