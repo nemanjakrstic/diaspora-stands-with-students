@@ -2,23 +2,34 @@ import { Button, Chip, Group, Modal, Stack, Tooltip, useMantineTheme } from "@ma
 import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
 import { IconHeartFilled } from "@tabler/icons-react";
 import Map, { AttributionControl, Layer, MapRef, Marker, Source } from "@vis.gl/react-maplibre";
+import { LngLatBounds } from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
 import { InstagramEmbed } from "react-social-media-embed";
 import { Event, Place, places } from "../data";
+import { useAnimatedMarkers } from "../hooks/useAnimatedMarkers";
+import { socket } from "../socket";
+import { useStore } from "../store";
 import { createArc, LngLatLite } from "../utils/geojson";
 import { mapStyle } from "../utils/map";
 import { Layout } from "./Layout";
-import { socket } from "../socket";
-import { useStore } from "../store";
-import { LngLatBounds } from "maplibre-gl";
-import { useAnimatedMarkers } from "../hooks/useAnimatedMarkers";
 
 const MIN_ZOOM = 1;
 const STUDENTS: LngLatLite = { lng: 19.82974214457107, lat: 45.26535625358795 };
 
+interface BasePayload {
+  id: string;
+  location: LngLatLite;
+  count: number;
+}
+
+interface InitPayload extends BasePayload {
+  ip: string;
+}
+
 export const App = () => {
   const theme = useMantineTheme();
   const [count, setCount] = useState(0);
+  const [id, setId] = useState<string>();
   const [viewState, setViewState] = useState({ longitude: STUDENTS.lng, latitude: STUDENTS.lat, zoom: 4 });
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedPlace, setSelectedPlace] = useState<Place>();
@@ -27,42 +38,38 @@ export const App = () => {
   const mapRef = useRef<MapRef>(null);
   const addAnimatedMarker = useAnimatedMarkers();
 
-  // useEffect(() => {
-  //   socket.on("count", (data: number) => {
-  //     setCount(data);
-  //   });
+  useEffect(() => {
+    socket.on("init", (data: InitPayload) => {
+      console.log("init", data);
+      setId(data.id);
+      setCount(data.count);
+    });
 
-  //   socket.on("love", (data: { lng: number; lat: number; count: number }) => {
-  //     positionIndex = 0;
-  //     setCount(data.count);
-  //     setLoveMarkerPositions(createArc(data, STUDENTS).geometry.coordinates);
-  //   });
+    socket.on("support", (data: BasePayload) => {
+      console.log("support", data);
+      setCount(data.count);
+      const map = mapRef.current?.getMap();
 
-  //   return () => {
-  //     socket.off("count");
-  //     socket.off("love");
-  //   };
-  // }, []);
+      if (map) {
+        addAnimatedMarker(map, data.location, STUDENTS);
 
-  const sendLove = () => {
-    // socket.emit("love");
+        if (data.id === id) {
+          const bounds = new LngLatBounds();
+          bounds.extend([data.location.lng, data.location.lat]);
+          bounds.extend([STUDENTS.lng, STUDENTS.lat]);
+          map.fitBounds(bounds, { padding: 50, maxZoom: 15, duration: 1000 });
+        }
+      }
+    });
 
-    const map = mapRef.current?.getMap();
+    return () => {
+      socket.off("init");
+      socket.off("support");
+    };
+  }, [addAnimatedMarker, id]);
 
-    if (map) {
-      addAnimatedMarker(map, map.getBounds().getSouthEast(), STUDENTS);
-
-      const bounds = new LngLatBounds();
-      bounds.extend(map.getBounds().getSouthEast().toArray());
-      bounds.extend([STUDENTS.lng, STUDENTS.lat]);
-
-      // Fit the map to the bounds with optional padding
-      map.fitBounds(bounds, {
-        padding: 50, // Adds padding around the edges (optional)
-        // maxZoom: 15, // Prevents zooming in too much (optional)
-        duration: 1000, // Animation duration in ms (optional)
-      });
-    }
+  const handleSupportButtonClick = () => {
+    socket.emit("support");
   };
 
   const selectPlace = (place: Place) => {
@@ -87,7 +94,7 @@ export const App = () => {
         </Stack>
       </Modal>
 
-      <HeartIcon count={count} onClick={sendLove} />
+      <HeartIcon count={count} onClick={handleSupportButtonClick} />
 
       <Layout onSelect={selectPlace}>
         <Map
@@ -137,7 +144,7 @@ const HeartIcon = ({ count, onClick }: { count: number; onClick: () => void }) =
 
   return (
     <Tooltip label={t.click_to_show_support} position="bottom" withArrow>
-      <Button.Group style={{ zIndex: 1000 }} pos="fixed" bottom={10} right={10}>
+      <Button.Group style={{ zIndex: 90 }} pos="fixed" bottom={10} right={10}>
         <Button.GroupSection size="lg" variant="default" bg="var(--mantine-color-body)" miw={60}>
           {count}
         </Button.GroupSection>

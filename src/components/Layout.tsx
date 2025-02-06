@@ -1,4 +1,5 @@
 import {
+  ActionIcon,
   AppShell,
   Badge,
   Burger,
@@ -6,23 +7,22 @@ import {
   Input,
   NavLink,
   ScrollArea,
-  Select,
   Stack,
   Text,
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconHeartFilled } from "@tabler/icons-react";
+import { IconHeartFilled, IconInfoCircle } from "@tabler/icons-react";
 import { matchSorter } from "match-sorter";
 import { ReactNode, useMemo, useState } from "react";
 import { Place, places } from "../data";
 import { useStore } from "../store";
-import { LanguageCode, messages } from "../messages";
+// import { LanguageCode, messages } from "../messages";
 
-const languages = Object.keys(messages).map((language) => ({
-  value: language,
-  label: messages[language as LanguageCode].language,
-}));
+// const languages = Object.keys(messages).map((language) => ({
+//   value: language,
+//   label: messages[language as LanguageCode].language,
+// }));
 
 interface LayoutProps {
   children: ReactNode;
@@ -49,23 +49,44 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
             {t.title}
           </Text>
 
-          <Text size="md" fw={900} hiddenFrom="sm">
+          <Text size="sm" fw={900} hiddenFrom="sm">
             {t.title}
           </Text>
 
-          <Select
-            ml="auto"
-            placeholder="Pick value"
-            value={language}
-            data={languages}
-            onChange={(language) => setLanguage(language as LanguageCode)}
-          />
+          <ActionIcon ml="auto" variant="light">
+            {/* <IconAdjustments style={{ width: "70%", height: "70%" }} stroke={1.5} /> */}
+            <IconInfoCircle style={{ width: "70%", height: "70%" }} stroke={1.5} />
+          </ActionIcon>
         </Group>
       </AppShell.Header>
 
       <AppShell.Navbar>
         <Stack p="md">
-          <Input placeholder={`${t.filter}...`} value={search} onChange={(e) => setSearch(e.currentTarget.value)} />
+          {/* <Select
+            placeholder="Pick value"
+            value={language}
+            data={languages}
+            onChange={(language) => setLanguage(language as LanguageCode)}
+          /> */}
+
+          <Group>
+            <Input
+              flex={1}
+              placeholder={`${t.filter}...`}
+              value={search}
+              onChange={(e) => setSearch(e.currentTarget.value)}
+            />
+
+            <Text
+              style={{ cursor: "pointer", color: theme.colors.gray[5] }}
+              ml="auto"
+              size="sm"
+              fw={900}
+              onClick={() => setLanguage(language === "en" ? "sr" : "en")}
+            >
+              {language.toUpperCase()}
+            </Text>
+          </Group>
         </Stack>
 
         <ScrollArea>
