@@ -28,6 +28,7 @@ interface InitPayload extends BasePayload {
 
 export const App = () => {
   const theme = useMantineTheme();
+  const [scrolledToBounds, setScrolledToBounds] = useState(false);
   const [count, setCount] = useState(0);
   const [id, setId] = useState<string>();
   const [viewState, setViewState] = useState({ longitude: STUDENTS.lng, latitude: STUDENTS.lat, zoom: 4 });
@@ -53,11 +54,12 @@ export const App = () => {
       if (map) {
         addAnimatedMarker(map, data.location, STUDENTS);
 
-        if (data.id === id) {
+        if (data.id === id && !scrolledToBounds) {
           const bounds = new LngLatBounds();
           bounds.extend([data.location.lng, data.location.lat]);
           bounds.extend([STUDENTS.lng, STUDENTS.lat]);
           map.fitBounds(bounds, { padding: 50, maxZoom: 15, duration: 1000 });
+          setScrolledToBounds(true);
         }
       }
     });
@@ -66,7 +68,7 @@ export const App = () => {
       socket.off("init");
       socket.off("support");
     };
-  }, [addAnimatedMarker, id]);
+  }, [addAnimatedMarker, id, scrolledToBounds]);
 
   const handleSupportButtonClick = () => {
     socket.emit("support");
