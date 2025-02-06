@@ -3,7 +3,7 @@ import csv from "./data.csv?raw";
 
 const rows = csv
   .split("\n")
-  .filter((line) => line.includes("http")) // Filter out rows without a URL
+  .filter((line) => line.includes("http") && line.includes("instagram")) // Filter out rows without a URL
   .map((line) => {
     const [city, country, date, location, url] = line.split("\t");
     const [lat, lng] = location.split(",");
