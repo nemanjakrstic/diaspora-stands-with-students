@@ -1,8 +1,19 @@
 import { MapInstance } from "@vis.gl/react-maplibre";
 import { Marker } from "maplibre-gl";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { createArc, LngLatLite } from "../utils/geojson";
 import { useAnimationFrame } from "./useAnimationFrame";
+import heart from "../images/heart.svg";
+
+const createImage = () => {
+  const img = document.createElement("img");
+  img.src = heart;
+  img.style.color = "purple";
+  img.style.fill = "purple";
+  img.style.width = "30px";
+  img.style.height = "30px";
+  return img;
+};
 
 const VELOCITY = 10;
 
@@ -38,15 +49,15 @@ export const useAnimatedMarkers = () => {
     setAnimate(nextMarkers.length > 0);
   });
 
-  return (map: MapInstance, left: LngLatLite, right: LngLatLite) => {
+  return useCallback((map: MapInstance, left: LngLatLite, right: LngLatLite) => {
     const { coordinates } = createArc(left, right).geometry;
     const [lng, lat] = coordinates[0];
 
-    const marker = new Marker();
+    const marker = new Marker({ element: createImage() });
     marker.setLngLat([lng, lat]);
     marker.addTo(map);
 
     markersRef.current.push({ marker, coordinates, currentIndex: 0 });
     setAnimate(true);
-  };
+  }, []);
 };
