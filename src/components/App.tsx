@@ -28,6 +28,7 @@ interface InitPayload extends BasePayload {
 
 export const App = () => {
   const theme = useMantineTheme();
+  const showInfoModal = useStore((state) => state.showInfoModal);
   const [scrolledToBounds, setScrolledToBounds] = useState(false);
   const [count, setCount] = useState(0);
   const [id, setId] = useState<string>();
@@ -38,6 +39,7 @@ export const App = () => {
   const [debouncedUrl] = useDebouncedValue(selectedEvent?.url, 100);
   const mapRef = useRef<MapRef>(null);
   const addAnimatedMarker = useAnimatedMarkers();
+  const t = useStore((state) => state.messages);
 
   useEffect(() => {
     socket.on("init", (data: InitPayload) => {
@@ -94,6 +96,41 @@ export const App = () => {
 
           {selectedEvent && selectedEvent.url === debouncedUrl ? <InstagramEmbed url={selectedEvent.url} /> : null}
         </Stack>
+      </Modal>
+
+      <Modal opened={showInfoModal} onClose={() => useStore.setState({ showInfoModal: false })} title={`${t.title}!`}>
+        <p>
+          Napravljeno s ljubavlju od{" "}
+          <a target="_blank" href="https://github.com/nemanjakrstic">
+            @nemanjakrstic
+          </a>{" "}
+          i{" "}
+          <a target="_blank" href="https://github.com/jocascript">
+            @jocascript
+          </a>
+          . Volimo vas studenti! Borimo se sa vama do kraja!
+        </p>
+
+        <p>
+          Za dodavanje na mapu, samo objavite post na Instagramu i dodajte bilo koji od sledećih tagova:
+          <ul>
+            <li>#DijasporaUzStudente</li>
+            <li>#DiasporaWithStudents</li>
+            <li>#DiasporaStandsWithStudents</li>
+          </ul>
+        </p>
+
+        <hr />
+
+        <p>
+          <small>
+            Ovaj projekat je open-source. Znas da programiraš? Posalji nam PR na{" "}
+            <a target="_blank" href="https://github.com/nemanjakrstic/diaspora-stands-with-students">
+              GitHub
+            </a>
+            -u. Jedva čekamo da nam se pridružiš!
+          </small>
+        </p>
       </Modal>
 
       <HeartIcon count={count} onClick={handleSupportButtonClick} />

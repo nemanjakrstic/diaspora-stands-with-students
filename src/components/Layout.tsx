@@ -53,7 +53,7 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
             {t.title}
           </Text>
 
-          <ActionIcon ml="auto" variant="light">
+          <ActionIcon ml="auto" variant="light" onClick={() => useStore.setState({ showInfoModal: true })}>
             {/* <IconAdjustments style={{ width: "70%", height: "70%" }} stroke={1.5} /> */}
             <IconInfoCircle style={{ width: "70%", height: "70%" }} stroke={1.5} />
           </ActionIcon>

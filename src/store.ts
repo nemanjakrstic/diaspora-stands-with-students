@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import { LanguageCode, Messages, messages } from "./messages";
 
 interface Store {
+  showInfoModal: boolean;
   messages: Messages;
   language: LanguageCode;
   setLanguage: (language: LanguageCode) => void;
@@ -11,6 +12,7 @@ interface Store {
 export const useStore = create(
   persist<Store>(
     (set) => ({
+      showInfoModal: true,
       messages: messages.sr,
       language: "sr",
 
