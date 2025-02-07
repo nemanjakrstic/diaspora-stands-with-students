@@ -147,6 +147,11 @@ export const App = () => {
           onMove={({ viewState }) =>
             setViewState({ ...viewState, zoom: Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, viewState.zoom)) })
           }
+          onClick={(e) => {
+            if (import.meta.env.DEV) {
+              console.log(`${e.lngLat.lat},${e.lngLat.lng}`);
+            }
+          }}
         >
           <AttributionControl position="top-right" />
 
