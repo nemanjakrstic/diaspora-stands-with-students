@@ -9,10 +9,11 @@ import {
   ScrollArea,
   Stack,
   Text,
+  Tooltip,
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconHeartFilled, IconInfoCircle } from "@tabler/icons-react";
+import { IconBrandInstagram, IconHeartFilled, IconInfoCircle } from "@tabler/icons-react";
 import { matchSorter } from "match-sorter";
 import { ReactNode, useMemo, useState } from "react";
 import { Place, places } from "../data";
@@ -53,10 +54,24 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
             {t.title}
           </Text>
 
-          <ActionIcon ml="auto" variant="light" onClick={() => useStore.setState({ showInfoModal: true })}>
-            {/* <IconAdjustments style={{ width: "70%", height: "70%" }} stroke={1.5} /> */}
-            <IconInfoCircle style={{ width: "70%", height: "70%" }} stroke={1.5} />
-          </ActionIcon>
+          <Tooltip label={t.follow_our_instagram} withArrow>
+            <ActionIcon
+              ml="auto"
+              component="a"
+              href="http://instagram.com/dijasporauzstudente/?utm_source=website&utm_medium=referral"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="light"
+            >
+              <IconBrandInstagram style={{ width: "80%", height: "80%" }} stroke={1.5} />
+            </ActionIcon>
+          </Tooltip>
+
+          <Tooltip label={t.project_information} withArrow>
+            <ActionIcon variant="light" onClick={() => useStore.setState({ showInfoModal: true })}>
+              <IconInfoCircle style={{ width: "80%", height: "80%" }} stroke={1.5} />
+            </ActionIcon>
+          </Tooltip>
         </Group>
       </AppShell.Header>
 
