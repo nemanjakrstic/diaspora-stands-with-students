@@ -113,14 +113,13 @@ export const App = () => {
           . Volimo vas studenti! Borimo se sa vama do kraja!
         </p>
 
-        <p>
-          Za dodavanje na mapu, samo objavite post na Instagramu i dodajte bilo koji od sledećih tagova:
-          <ul>
-            <li>#DijasporaUzStudente</li>
-            <li>#DiasporaWithStudents</li>
-            <li>#DiasporaStandsWithStudents</li>
-          </ul>
-        </p>
+        <p>Za dodavanje na mapu, samo objavite post na Instagramu i dodajte bilo koji od sledećih tagova:</p>
+
+        <ul>
+          <li>#DijasporaUzStudente</li>
+          <li>#DiasporaWithStudents</li>
+          <li>#DiasporaStandsWithStudents</li>
+        </ul>
 
         <hr />
 
