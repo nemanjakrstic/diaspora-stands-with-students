@@ -1,4 +1,4 @@
-import { Alert, Divider, Modal, Text } from "@mantine/core";
+import { Alert, Modal } from "@mantine/core";
 import { useStore } from "../store";
 
 export const InfoModal = () => {
