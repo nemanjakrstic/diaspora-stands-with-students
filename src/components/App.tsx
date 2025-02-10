@@ -32,7 +32,7 @@ interface InitPayload extends BasePayload {
 export const App = () => {
   const theme = useMantineTheme();
   const [scrolledToBounds, setScrolledToBounds] = useState(false);
-  const [count, setCount] = useState(0);
+  const count = useStore((state) => state.count);
   const [id, setId] = useState<string>();
   const [viewState, setViewState] = useState({ longitude: STUDENTS.lng, latitude: STUDENTS.lat, zoom: 4 });
   const [opened, { open, close }] = useDisclosure(false);
@@ -41,17 +41,19 @@ export const App = () => {
   const [debouncedUrl] = useDebouncedValue(selectedEvent?.url, 100);
   const mapRef = useRef<MapRef>(null);
   const addAnimatedMarker = useAnimatedMarkers();
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     socket.on("init", (data: InitPayload) => {
       console.log("init", data);
       setId(data.id);
-      setCount(data.count);
+      setReady(true);
+      useStore.setState({ count: data.count });
     });
 
     socket.on("support", (data: BasePayload) => {
       console.log("support", data);
-      setCount(data.count);
+      useStore.setState({ count: data.count });
       const map = mapRef.current?.getMap();
 
       if (map) {
@@ -101,7 +103,7 @@ export const App = () => {
 
       <InfoModal />
 
-      <HeartIcon count={count} onClick={handleSupportButtonClick} />
+      <HeartIcon count={count} onClick={handleSupportButtonClick} disabled={!ready} />
 
       <Layout onSelect={selectPlace}>
         <Map
@@ -153,19 +155,21 @@ export const App = () => {
   );
 };
 
-const HeartIcon = ({ count, onClick }: { count: number; onClick: () => void }) => {
+const HeartIcon = ({ count, onClick, disabled }: { count: number; onClick: () => void; disabled: boolean }) => {
   const t = useStore((state) => state.messages);
 
   return (
-    <Tooltip label={t.click_to_show_support} position="bottom" withArrow>
+    <Tooltip label={disabled ? "Network issue" : t.click_to_show_support} position="bottom" withArrow>
       <Button.Group style={{ zIndex: 90 }} pos="fixed" bottom={10} right={10}>
         <Button.GroupSection size="lg" variant="default" bg="var(--mantine-color-body)" miw={60}>
           {count}
         </Button.GroupSection>
 
-        <Button size="lg" variant="default" radius="md" onClick={onClick}>
-          <IconHeartFilled color="red" />
-        </Button>
+        {disabled ? null : (
+          <Button size="lg" variant="default" radius="md" onClick={onClick}>
+            <IconHeartFilled color="red" />
+          </Button>
+        )}
       </Button.Group>
     </Tooltip>
   );
