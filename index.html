@@ -5,13 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Diaspora Stands with Students</title>
+
+    <style>
+      .grecaptcha-badge {
+        visibility: hidden !important;
+      }
+    </style>
   </head>
 
   <body>
     <div id="root"></div>
     <script type="module" src="/src/index.tsx"></script>
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SLXH93D2X1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -21,5 +27,15 @@
       gtag("js", new Date());
       gtag("config", "G-SLXH93D2X1");
     </script>
+
+    <div
+      class="g-recaptcha"
+      data-sitekey="%VITE_RECAPTCHA_SITE_KEY%"
+      data-callback="onSubmit"
+      data-size="invisible"
+    ></div>
+
+    <!-- Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </body>
 </html>
