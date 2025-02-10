@@ -12,6 +12,7 @@ import { useStore } from "../store";
 import { createArc, LngLatLite } from "../utils/geojson";
 import { mapStyle } from "../utils/map";
 import { Layout } from "./Layout";
+import { InfoModal } from "./InfoModal";
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 7;
@@ -30,7 +31,6 @@ interface InitPayload extends BasePayload {
 
 export const App = () => {
   const theme = useMantineTheme();
-  const showInfoModal = useStore((state) => state.showInfoModal);
   const [scrolledToBounds, setScrolledToBounds] = useState(false);
   const [count, setCount] = useState(0);
   const [id, setId] = useState<string>();
@@ -41,7 +41,6 @@ export const App = () => {
   const [debouncedUrl] = useDebouncedValue(selectedEvent?.url, 100);
   const mapRef = useRef<MapRef>(null);
   const addAnimatedMarker = useAnimatedMarkers();
-  const t = useStore((state) => state.messages);
 
   useEffect(() => {
     socket.on("init", (data: InitPayload) => {
@@ -100,39 +99,7 @@ export const App = () => {
         </Stack>
       </Modal>
 
-      <Modal opened={showInfoModal} onClose={() => useStore.setState({ showInfoModal: false })} title={`${t.title}!`}>
-        <p>
-          Napravljeno s ljubavlju od{" "}
-          <a target="_blank" href="https://github.com/nemanjakrstic">
-            @nemanjakrstic
-          </a>{" "}
-          i{" "}
-          <a target="_blank" href="https://github.com/jocascript">
-            @jocascript
-          </a>
-          . Volimo vas studenti! Borimo se sa vama do kraja!
-        </p>
-
-        <p>Za dodavanje na mapu, samo objavite post na Instagramu i dodajte bilo koji od sledećih tagova:</p>
-
-        <ul>
-          <li>#DijasporaUzStudente</li>
-          <li>#DiasporaWithStudents</li>
-          <li>#DiasporaStandsWithStudents</li>
-        </ul>
-
-        <hr />
-
-        <p>
-          <small>
-            Ovaj projekat je open-source. Znas da programiraš? Pošalji nam PR na{" "}
-            <a target="_blank" href="https://github.com/nemanjakrstic/diaspora-stands-with-students">
-              GitHub
-            </a>
-            -u. Jedva čekamo da nam se pridružiš!
-          </small>
-        </p>
-      </Modal>
+      <InfoModal />
 
       <HeartIcon count={count} onClick={handleSupportButtonClick} />
 
