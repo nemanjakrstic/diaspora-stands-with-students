@@ -28,18 +28,7 @@
       gtag("config", "G-SLXH93D2X1");
     </script>
 
-    <div
-      class="g-recaptcha"
-      data-sitekey="%VITE_RECAPTCHA_SITE_KEY%"
-      data-callback="onSubmit"
-      data-size="invisible"
-    ></div>
-
     <!-- Google reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-
-    <script>
-      grecaptcha.execute();
-    </script>
+    <script src="https://www.google.com/recaptcha/api.js?render=%VITE_RECAPTCHA_SITE_KEY%"></script>
   </body>
 </html>
