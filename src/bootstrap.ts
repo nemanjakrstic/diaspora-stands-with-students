@@ -6,9 +6,6 @@ import { socket } from "./socket";
 //   });
 // });
 
-console.log("Bootstrap");
-grecaptcha.execute();
-
 interface Window {
   onSubmit?: (token: string) => void;
 }
