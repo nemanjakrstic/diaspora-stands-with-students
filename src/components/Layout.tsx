@@ -18,12 +18,7 @@ import { matchSorter } from "match-sorter";
 import { ReactNode, useMemo, useState } from "react";
 import { Place, places } from "../data";
 import { useStore } from "../store";
-// import { LanguageCode, messages } from "../messages";
-
-// const languages = Object.keys(messages).map((language) => ({
-//   value: language,
-//   label: messages[language as LanguageCode].language,
-// }));
+import { useLocale } from "../stores/locale";
 
 interface LayoutProps {
   children: ReactNode;
@@ -32,8 +27,8 @@ interface LayoutProps {
 
 export const Layout = ({ children, onSelect }: LayoutProps) => {
   const theme = useMantineTheme();
-  const t = useStore((state) => state.messages);
-  const setLanguage = useStore((state) => state.setLanguage);
+  const t = useLocale((state) => state.messages);
+  const setLanguage = useLocale((state) => state.setLanguage);
   const language = useStore((state) => state.language);
   const [opened, { toggle, close }] = useDisclosure(false);
   const [search, setSearch] = useState("");
@@ -77,13 +72,6 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
 
       <AppShell.Navbar>
         <Stack p="md">
-          {/* <Select
-            placeholder="Pick value"
-            value={language}
-            data={languages}
-            onChange={(language) => setLanguage(language as LanguageCode)}
-          /> */}
-
           <Group>
             <Input
               flex={1}

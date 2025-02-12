@@ -13,6 +13,7 @@ import { createArc, LngLatLite } from "../utils/geojson";
 import { mapStyle } from "../utils/map";
 import { Layout } from "./Layout";
 import { InfoModal } from "./InfoModal";
+import { useLocale } from "../stores/locale";
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 7;
@@ -156,7 +157,7 @@ export const App = () => {
 };
 
 const HeartIcon = ({ count, onClick, disabled }: { count: number; onClick: () => void; disabled: boolean }) => {
-  const t = useStore((state) => state.messages);
+  const t = useLocale((state) => state.messages);
 
   return (
     <Tooltip label={disabled ? "Network issue" : t.click_to_show_support} position="bottom" withArrow>
