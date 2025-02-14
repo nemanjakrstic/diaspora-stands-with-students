@@ -17,13 +17,13 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconBrandInstagram, IconCalendar, IconHeartFilled, IconInfoCircle, IconMapPin } from "@tabler/icons-react";
 import { matchSorter } from "match-sorter";
 import { ReactNode, useMemo, useState } from "react";
-import { Location, locations } from "../data";
+import { events, Location, LocationEvent, locations } from "../data";
 import { useStore } from "../store";
 import { useLocale } from "../stores/locale";
 
 interface LayoutProps {
   children: ReactNode;
-  onSelect: (place: Location) => void;
+  onSelect: (place: Location, event: LocationEvent) => void;
 }
 
 export const Layout = ({ children, onSelect }: LayoutProps) => {
@@ -34,6 +34,7 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
   const [opened, { toggle, close }] = useDisclosure(false);
   const [search, setSearch] = useState("");
   const visibleLocations = useMemo(() => matchSorter(locations, search, { keys: ["title"] }), [search]);
+  const visibleEvents = useMemo(() => matchSorter(events, search, { keys: ["location.title"] }), [search]);
   const [activeTab, setActiveTab] = useState<string | null>("locations");
 
   return (
@@ -138,7 +139,7 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
                     label={place.city}
                     description={place.country}
                     onClick={() => {
-                      onSelect(place);
+                      onSelect(place, place.events[0]);
                       close();
                     }}
                     leftSection={
@@ -152,14 +153,14 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
 
               <Tabs.Panel value="events">
                 <ScrollArea>
-                  {visibleLocations.map((event, index) => (
+                  {visibleEvents.map((event, index) => (
                     <NavLink
                       key={index}
                       href="#"
-                      label={event.title}
-                      // description={event.date}
+                      label={event.location.title}
+                      description={event.event.date}
                       onClick={() => {
-                        // TODO: onSelect(event);
+                        onSelect(event.location, event.event);
                         close();
                       }}
                     />
