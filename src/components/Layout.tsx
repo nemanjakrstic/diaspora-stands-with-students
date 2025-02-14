@@ -20,6 +20,7 @@ import { ReactNode, useMemo, useState } from "react";
 import { events, Location, LocationEvent, locations } from "../data";
 import { useStore } from "../store";
 import { useLocale } from "../stores/locale";
+import { orderBy } from "lodash";
 
 interface LayoutProps {
   children: ReactNode;
@@ -36,6 +37,11 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
   const visibleLocations = useMemo(() => matchSorter(locations, search, { keys: ["title"] }), [search]);
   const visibleEvents = useMemo(() => matchSorter(events, search, { keys: ["location.title"] }), [search]);
   const [activeTab, setActiveTab] = useState<string | null>("locations");
+
+  const sortedEvents = useMemo(
+    () => orderBy(visibleEvents, ["event.dateIso", "location.title"], ["desc", "asc"]),
+    [visibleEvents],
+  );
 
   return (
     <AppShell header={{ height: 60 }} navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}>
@@ -153,7 +159,7 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
 
               <Tabs.Panel value="events">
                 <ScrollArea>
-                  {visibleEvents.map((event, index) => (
+                  {sortedEvents.map((event, index) => (
                     <NavLink
                       key={index}
                       href="#"

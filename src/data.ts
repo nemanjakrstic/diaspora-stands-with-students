@@ -15,7 +15,7 @@ const rows = csv
       city: city || undefined,
       country,
       date: date || "N/A",
-      dateIso,
+      dateIso: dateIso || "N/A",
       location: { lng: parseFloat(lng), lat: parseFloat(lat) },
       url,
     };
@@ -23,6 +23,7 @@ const rows = csv
 
 export interface LocationEvent {
   date: string;
+  dateIso: string;
   url: string;
 }
 
@@ -31,7 +32,7 @@ export interface Location {
   city?: string;
   country: string;
   location: { lat: number; lng: number };
-  events: { date: string; url: string }[];
+  events: LocationEvent[];
 }
 
 export const locations: Location[] = map(
@@ -41,7 +42,11 @@ export const locations: Location[] = map(
     city: events[0].city,
     country: events[0].country,
     location: events[0].location,
-    events: orderBy(events, (event) => event.dateIso, "desc").map((event) => ({ date: event.date, url: event.url })),
+    events: orderBy(events, (event) => event.dateIso, "desc").map((event) => ({
+      date: event.date,
+      dateIso: event.dateIso,
+      url: event.url,
+    })),
   }),
 );
 
@@ -50,11 +55,7 @@ interface Event {
   event: LocationEvent;
 }
 
-export const events = orderBy(
-  locations.reduce<Event[]>((locations, location) => {
-    locations.push(...location.events.map((event) => ({ location, event })));
-    return locations;
-  }, []),
-  ["location.dateIso", "location.title"],
-  ["desc", "asc"],
-);
+export const events = locations.reduce<Event[]>((locations, location) => {
+  locations.push(...location.events.map((event) => ({ location, event })));
+  return locations;
+}, []);
