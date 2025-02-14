@@ -47,7 +47,7 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
             {t.title}
           </Text>
 
-          <Text size="sm" fw={900} hiddenFrom="sm">
+          <Text size="sm" fw={900} hiddenFrom="sm" maw={190}>
             {t.title}
           </Text>
 
