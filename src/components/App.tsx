@@ -5,7 +5,7 @@ import Map, { AttributionControl, Layer, MapRef, Marker, Source } from "@vis.gl/
 import { LngLatBounds } from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
 import { InstagramEmbed } from "react-social-media-embed";
-import { Event, Location, locations } from "../data";
+import { LocationEvent, Location, locations } from "../data";
 import { useAnimatedMarkers } from "../hooks/useAnimatedMarkers";
 import { socket } from "../socket";
 import { useStore } from "../store";
@@ -37,8 +37,8 @@ export const App = () => {
   const [id, setId] = useState<string>();
   const [viewState, setViewState] = useState({ longitude: STUDENTS.lng, latitude: STUDENTS.lat, zoom: 4 });
   const [opened, { open, close }] = useDisclosure(false);
-  const [selectedPlace, setSelectedPlace] = useState<Location>();
-  const [selectedEvent, setSelectedEvent] = useState<Event>();
+  const [selectedLocation, setSelectedLocation] = useState<Location>();
+  const [selectedEvent, setSelectedEvent] = useState<LocationEvent>();
   const [debouncedUrl] = useDebouncedValue(selectedEvent?.url, 100);
   const mapRef = useRef<MapRef>(null);
   const addAnimatedMarker = useAnimatedMarkers();
@@ -80,18 +80,18 @@ export const App = () => {
     socket.emit("support");
   };
 
-  const selectPlace = (place: Location) => {
-    setSelectedPlace(place);
-    setSelectedEvent(place.events[0]);
+  const selectEvent = (location: Location, event: LocationEvent) => {
+    setSelectedLocation(location);
+    setSelectedEvent(event);
     open();
   };
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title={selectedPlace?.title} size="xl">
+      <Modal opened={opened} onClose={close} title={selectedLocation?.title} size="xl">
         <Stack>
           <Group>
-            {selectedPlace?.events?.map((event, index) => (
+            {selectedLocation?.events?.map((event, index) => (
               <Chip key={index} checked={event === selectedEvent} onClick={() => setSelectedEvent(event)}>
                 {event.date}
               </Chip>
@@ -106,7 +106,7 @@ export const App = () => {
 
       <HeartIcon count={count} onClick={handleSupportButtonClick} disabled={!ready} />
 
-      <Layout onSelect={selectPlace}>
+      <Layout onSelect={selectEvent}>
         <Map
           mapStyle={mapStyle}
           ref={mapRef}
@@ -129,7 +129,7 @@ export const App = () => {
               key={index}
               longitude={place.location.lng}
               latitude={place.location.lat}
-              onClick={() => selectPlace(place)}
+              onClick={() => selectEvent(place, place.events[0])}
             >
               <IconHeartFilled cursor="pointer" color={theme.colors.red[7]} size={24} />
             </Marker>
