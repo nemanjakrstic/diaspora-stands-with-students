@@ -26,7 +26,7 @@ export interface Event {
   url: string;
 }
 
-export interface Place {
+export interface Location {
   title: string;
   city?: string;
   country: string;
@@ -34,7 +34,7 @@ export interface Place {
   events: Event[];
 }
 
-export const places: Place[] = map(
+export const places: Location[] = map(
   groupBy(rows, (row) => row.title),
   (events) => ({
     title: events[0].title,
@@ -44,36 +44,3 @@ export const places: Place[] = map(
     events: orderBy(events, (event) => event.dateIso, "desc").map((event) => ({ date: event.date, url: event.url })),
   }),
 );
-
-// export const minEvents = min(places.map((items) => items.length)) ?? 0;
-// export const meanEvents = Math.ceil(mean(places.map((items) => items.length))) ?? 0;
-// export const maxEvents = max(places.map((items) => items.length)) ?? 0;
-
-// type GroupedValues = { [key: number]: number[] };
-
-// /**
-//  * Groups an array of values based on the closest match from the group values.
-//  *
-//  * @param values - The array of float values to be grouped.
-//  * @param groups - The array of predefined group values.
-//  * @returns An object where keys are group values and values are arrays of grouped numbers.
-//  */
-// const groupByClosest = (values: number[], groups: number[]): GroupedValues => {
-//   return values.reduce((acc: GroupedValues, value: number) => {
-//     const closest = minBy(groups, (group) => Math.abs(value - group))!;
-
-//     if (!acc[closest]) {
-//       acc[closest] = [];
-//     }
-//     acc[closest].push(value);
-
-//     return acc;
-//   }, {});
-// };
-
-// export const imageByTitle = groupByClosest(
-//   places.map((items) => items.length),
-//   [minEvents, meanEvents, maxEvents],
-// );
-
-// console.log(imageByTitle);

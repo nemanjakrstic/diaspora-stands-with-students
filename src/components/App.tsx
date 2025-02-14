@@ -5,7 +5,7 @@ import Map, { AttributionControl, Layer, MapRef, Marker, Source } from "@vis.gl/
 import { LngLatBounds } from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
 import { InstagramEmbed } from "react-social-media-embed";
-import { Event, Place, places } from "../data";
+import { Event, Location, places } from "../data";
 import { useAnimatedMarkers } from "../hooks/useAnimatedMarkers";
 import { socket } from "../socket";
 import { useStore } from "../store";
@@ -37,7 +37,7 @@ export const App = () => {
   const [id, setId] = useState<string>();
   const [viewState, setViewState] = useState({ longitude: STUDENTS.lng, latitude: STUDENTS.lat, zoom: 4 });
   const [opened, { open, close }] = useDisclosure(false);
-  const [selectedPlace, setSelectedPlace] = useState<Place>();
+  const [selectedPlace, setSelectedPlace] = useState<Location>();
   const [selectedEvent, setSelectedEvent] = useState<Event>();
   const [debouncedUrl] = useDebouncedValue(selectedEvent?.url, 100);
   const mapRef = useRef<MapRef>(null);
@@ -80,7 +80,7 @@ export const App = () => {
     socket.emit("support");
   };
 
-  const selectPlace = (place: Place) => {
+  const selectPlace = (place: Location) => {
     setSelectedPlace(place);
     setSelectedEvent(place.events[0]);
     open();

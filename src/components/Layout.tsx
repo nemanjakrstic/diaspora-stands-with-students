@@ -16,13 +16,13 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconBrandInstagram, IconHeartFilled, IconInfoCircle } from "@tabler/icons-react";
 import { matchSorter } from "match-sorter";
 import { ReactNode, useMemo, useState } from "react";
-import { Place, places } from "../data";
+import { Location, places } from "../data";
 import { useStore } from "../store";
 import { useLocale } from "../stores/locale";
 
 interface LayoutProps {
   children: ReactNode;
-  onSelect: (place: Place) => void;
+  onSelect: (place: Location) => void;
 }
 
 export const Layout = ({ children, onSelect }: LayoutProps) => {
