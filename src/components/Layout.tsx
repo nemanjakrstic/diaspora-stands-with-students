@@ -142,7 +142,7 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
                   <NavLink
                     key={index}
                     href="#"
-                    label={place.city}
+                    label={place.city || place.country}
                     description={place.country}
                     onClick={() => {
                       onSelect(place, place.events[0]);
