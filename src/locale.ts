@@ -23,6 +23,6 @@ export const locale = create("en", {
   add_to_map_instructions:
     "Za dodavanje na mapu, samo objavite post na Instagramu i dodajte bilo koji od sledećih tagova:",
   open_source_invitation: tpl`Ovaj projekat je open-source. Znaš da programiraš? Pošalji nam PR na ${arg("GitHub")}-u. Jedva čekamo da nam se pridružiš!`,
-  events: "Okupljanja",
+  events: "Kalendar",
   locations: "Mesta",
 });
