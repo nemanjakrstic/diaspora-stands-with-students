@@ -8,15 +8,16 @@ import {
   NavLink,
   ScrollArea,
   Stack,
+  Tabs,
   Text,
   Tooltip,
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconBrandInstagram, IconHeartFilled, IconInfoCircle } from "@tabler/icons-react";
+import { IconBrandInstagram, IconCalendar, IconHeartFilled, IconInfoCircle, IconMapPin } from "@tabler/icons-react";
 import { matchSorter } from "match-sorter";
 import { ReactNode, useMemo, useState } from "react";
-import { Location, places } from "../data";
+import { Location, locations } from "../data";
 import { useStore } from "../store";
 import { useLocale } from "../stores/locale";
 
@@ -32,7 +33,8 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
   const language = useStore((state) => state.language);
   const [opened, { toggle, close }] = useDisclosure(false);
   const [search, setSearch] = useState("");
-  const visiblePlaces = useMemo(() => matchSorter(places, search, { keys: ["title"] }), [search]);
+  const visibleLocations = useMemo(() => matchSorter(locations, search, { keys: ["title"] }), [search]);
+  const [activeTab, setActiveTab] = useState<string | null>("locations");
 
   return (
     <AppShell header={{ height: 60 }} navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}>
@@ -92,25 +94,81 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
           </Group>
         </Stack>
 
-        <ScrollArea>
-          {visiblePlaces.map((place, index) => (
-            <NavLink
-              key={index}
-              href="#"
-              label={place.city}
-              description={place.country}
-              onClick={() => {
-                onSelect(place);
-                close();
-              }}
-              leftSection={
-                <Badge size="xs" color="blue" circle>
-                  {place.events.length}
-                </Badge>
-              }
-            />
-          ))}
-        </ScrollArea>
+        <AppShell.Navbar>
+          <Stack p="md">
+            <Group>
+              <Input
+                flex={1}
+                placeholder={`${t.filter}...`}
+                value={search}
+                onChange={(e) => setSearch(e.currentTarget.value)}
+              />
+
+              <Text
+                style={{ cursor: "pointer", color: theme.colors.gray[5] }}
+                ml="auto"
+                size="sm"
+                fw={900}
+                onClick={() => setLanguage(language === "en" ? "sr" : "en")}
+              >
+                {language.toUpperCase()}
+              </Text>
+            </Group>
+          </Stack>
+
+          <Tabs value={activeTab} onChange={setActiveTab}>
+            <Tabs.List grow>
+              <Tabs.Tab value="locations" leftSection={<IconMapPin size={12} />}>
+                {t.locations}
+              </Tabs.Tab>
+
+              <Tabs.Tab value="events" leftSection={<IconCalendar size={12} />}>
+                {t.events}
+              </Tabs.Tab>
+            </Tabs.List>
+          </Tabs>
+
+          <ScrollArea>
+            <Tabs value={activeTab} onChange={setActiveTab}>
+              <Tabs.Panel value="locations" mah="100%">
+                {visibleLocations.map((place, index) => (
+                  <NavLink
+                    key={index}
+                    href="#"
+                    label={place.city}
+                    description={place.country}
+                    onClick={() => {
+                      onSelect(place);
+                      close();
+                    }}
+                    leftSection={
+                      <Badge size="xs" color="blue" circle>
+                        {place.events.length}
+                      </Badge>
+                    }
+                  />
+                ))}
+              </Tabs.Panel>
+
+              <Tabs.Panel value="events">
+                <ScrollArea>
+                  {visibleLocations.map((event, index) => (
+                    <NavLink
+                      key={index}
+                      href="#"
+                      label={event.title}
+                      // description={event.date}
+                      onClick={() => {
+                        // TODO: onSelect(event);
+                        close();
+                      }}
+                    />
+                  ))}
+                </ScrollArea>
+              </Tabs.Panel>
+            </Tabs>
+          </ScrollArea>
+        </AppShell.Navbar>
       </AppShell.Navbar>
 
       <AppShell.Main>{children}</AppShell.Main>
