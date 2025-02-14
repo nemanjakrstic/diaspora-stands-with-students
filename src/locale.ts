@@ -10,6 +10,8 @@ export const locale = create("en", {
   made_with_love_message: tpl`Made with love by ${arg("neca")} and ${arg("joca")}. We love you, students! We will be with you until the end!`,
   add_to_map_instructions: "To add to the map, just post on Instagram and add any of the following tags:",
   open_source_invitation: tpl`This project is open-source. Do you know how to code? Send us a PR on ${arg("GitHub")}. We can't wait for your contribution!`,
+  events: "Events",
+  locations: "Locations",
 }).create("sr", {
   language: "Jezik",
   title: "Dijaspora uz studente",
@@ -21,4 +23,6 @@ export const locale = create("en", {
   add_to_map_instructions:
     "Za dodavanje na mapu, samo objavite post na Instagramu i dodajte bilo koji od sledećih tagova:",
   open_source_invitation: tpl`Ovaj projekat je open-source. Znaš da programiraš? Pošalji nam PR na ${arg("GitHub")}-u. Jedva čekamo da nam se pridružiš!`,
+  events: "Okupljanja",
+  locations: "Mesta",
 });

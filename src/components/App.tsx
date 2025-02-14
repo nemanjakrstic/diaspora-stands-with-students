@@ -5,7 +5,7 @@ import Map, { AttributionControl, Layer, MapRef, Marker, Source } from "@vis.gl/
 import { LngLatBounds } from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
 import { InstagramEmbed } from "react-social-media-embed";
-import { Event, Location, places } from "../data";
+import { Event, Location, locations } from "../data";
 import { useAnimatedMarkers } from "../hooks/useAnimatedMarkers";
 import { socket } from "../socket";
 import { useStore } from "../store";
@@ -124,7 +124,7 @@ export const App = () => {
         >
           <AttributionControl position="top-right" />
 
-          {places.map((place, index) => (
+          {locations.map((place, index) => (
             <Marker
               key={index}
               longitude={place.location.lng}
@@ -135,7 +135,7 @@ export const App = () => {
             </Marker>
           ))}
 
-          {places.map((place, index) => (
+          {locations.map((place, index) => (
             <Source key={index} id={`arc-source-${index}`} type="geojson" data={createArc(place.location, STUDENTS)}>
               <Layer
                 id={`arc-layer-${index}`}

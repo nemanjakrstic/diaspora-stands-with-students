@@ -34,7 +34,7 @@ export interface Location {
   events: Event[];
 }
 
-export const places: Location[] = map(
+export const locations: Location[] = map(
   groupBy(rows, (row) => row.title),
   (events) => ({
     title: events[0].title,
