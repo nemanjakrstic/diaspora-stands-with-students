@@ -1,4 +1,4 @@
-import { groupBy, map, orderBy } from "lodash";
+import { groupBy, map, mapValues, orderBy } from "lodash";
 import csv from "./data.csv?raw";
 
 const rows = csv
@@ -59,3 +59,8 @@ export const events = locations.reduce<Event[]>((locations, location) => {
   locations.push(...location.events.map((event) => ({ location, event })));
   return locations;
 }, []);
+
+export const eventCountByDate = mapValues(
+  groupBy(rows, (row) => row.dateIso),
+  (rows) => rows.length,
+);

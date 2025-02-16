@@ -3,7 +3,9 @@ import {
   AppShell,
   Badge,
   Burger,
+  Divider,
   Group,
+  Indicator,
   Input,
   NavLink,
   ScrollArea,
@@ -13,14 +15,16 @@ import {
   Tooltip,
   useMantineTheme,
 } from "@mantine/core";
+import { Calendar } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import { IconBrandInstagram, IconCalendar, IconHeartFilled, IconInfoCircle, IconMapPin } from "@tabler/icons-react";
 import { matchSorter } from "match-sorter";
 import { ReactNode, useMemo, useState } from "react";
-import { events, Location, LocationEvent, locations } from "../data";
+import { eventCountByDate, events, Location, LocationEvent, locations } from "../data";
 import { useStore } from "../store";
 import { useLocale } from "../stores/locale";
 import { orderBy } from "lodash";
+import dayjs from "dayjs";
 
 interface LayoutProps {
   children: ReactNode;
@@ -37,11 +41,25 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
   const visibleLocations = useMemo(() => matchSorter(locations, search, { keys: ["title"] }), [search]);
   const visibleEvents = useMemo(() => matchSorter(events, search, { keys: ["location.title"] }), [search]);
   const [activeTab, setActiveTab] = useState<string | null>("locations");
+  const [selectedDate, setSelectedDate] = useState<Date>();
 
-  const sortedEvents = useMemo(
-    () => orderBy(visibleEvents, ["event.dateIso", "location.title"], ["desc", "asc"]),
-    [visibleEvents],
-  );
+  const sortedEvents = useMemo(() => {
+    return orderBy(visibleEvents, ["event.dateIso", "location.title"], ["desc", "asc"]).filter((event) => {
+      return selectedDate ? dayjs(event.event.dateIso).isSame(selectedDate, "date") : true;
+    });
+  }, [visibleEvents, selectedDate]);
+
+  const isSelectedDate = (date: Date) => {
+    return selectedDate ? dayjs(date).isSame(selectedDate, "date") : false;
+  };
+
+  const handleDateClick = (date: Date) => () => {
+    const dateIso = dayjs(date).format("YYYY-MM-DD");
+
+    if (dateIso in eventCountByDate) {
+      setSelectedDate(isSelectedDate(date) ? undefined : date);
+    }
+  };
 
   return (
     <AppShell header={{ height: 60 }} navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}>
@@ -134,6 +152,37 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
               </Tabs.Tab>
             </Tabs.List>
           </Tabs>
+
+          {activeTab === "events" ? (
+            <>
+              <Group justify="center" py="md">
+                <Calendar
+                  getDayProps={(date) => ({
+                    selected: isSelectedDate(date),
+                    onClick: handleDateClick(date),
+                  })}
+                  renderDay={(date) => {
+                    const day = date.getDate();
+                    const dateIso = dayjs(date).format("YYYY-MM-DD");
+
+                    return (
+                      <Indicator
+                        color="blue"
+                        label={<small>{eventCountByDate[dateIso]}</small>}
+                        size={14}
+                        offset={-1}
+                        disabled={!(dateIso in eventCountByDate)}
+                      >
+                        <div>{day}</div>
+                      </Indicator>
+                    );
+                  }}
+                />
+              </Group>
+
+              <Divider />
+            </>
+          ) : null}
 
           <ScrollArea>
             <Tabs value={activeTab} onChange={setActiveTab}>

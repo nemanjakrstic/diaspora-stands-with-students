@@ -45,14 +45,14 @@ export const App = () => {
 
   useEffect(() => {
     socket.on("init", (data: InitPayload) => {
-      console.log("init", data);
+      // console.log("init", data);
       setId(data.id);
       setReady(true);
       useStore.setState({ count: data.count });
     });
 
     socket.on("support", (data: BasePayload) => {
-      console.log("support", data);
+      // console.log("support", data);
       useStore.setState({ count: data.count });
       const map = mapRef.current?.getMap();
 

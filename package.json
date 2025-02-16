@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@mantine/core": "^7.16.2",
+    "@mantine/dates": "^7.16.3",
     "@mantine/hooks": "^7.16.2",
     "@mantine/modals": "^7.16.3",
     "@tabler/icons-react": "^3.30.0",
@@ -20,6 +21,7 @@
     "@turf/turf": "^7.2.0",
     "@vis.gl/react-maplibre": "^8.0.1",
     "axios": "^1.7.9",
+    "dayjs": "^1.11.13",
     "lodash": "^4.17.21",
     "maplibre-gl": "^5.1.0",
     "match-sorter": "^8.0.0",
