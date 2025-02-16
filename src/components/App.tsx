@@ -5,15 +5,15 @@ import Map, { AttributionControl, Layer, MapRef, Marker, Source } from "@vis.gl/
 import { LngLatBounds } from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
 import { InstagramEmbed } from "react-social-media-embed";
-import { LocationEvent, Location, locations } from "../data";
+import { Location, LocationEvent, locations } from "../data";
 import { useAnimatedMarkers } from "../hooks/useAnimatedMarkers";
 import { socket } from "../socket";
 import { useStore } from "../store";
+import { useLocale } from "../stores/locale";
 import { createArc, LngLatLite } from "../utils/geojson";
 import { mapStyle } from "../utils/map";
-import { Layout } from "./Layout";
 import { InfoModal } from "./InfoModal";
-import { useLocale } from "../stores/locale";
+import { Layout } from "./Layout";
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 7;
@@ -35,7 +35,6 @@ export const App = () => {
   const [scrolledToBounds, setScrolledToBounds] = useState(false);
   const count = useStore((state) => state.count);
   const [id, setId] = useState<string>();
-  const [viewState, setViewState] = useState({ longitude: STUDENTS.lng, latitude: STUDENTS.lat, zoom: 4 });
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedLocation, setSelectedLocation] = useState<Location>();
   const [selectedEvent, setSelectedEvent] = useState<LocationEvent>();
@@ -109,13 +108,11 @@ export const App = () => {
       <Layout onSelect={selectEvent}>
         <Map
           mapStyle={mapStyle}
+          maxZoom={MAX_ZOOM}
+          minZoom={MIN_ZOOM}
           ref={mapRef}
           style={{ height: "calc(100vh - 60px)" }}
           attributionControl={false}
-          {...viewState}
-          onMove={({ viewState }) =>
-            setViewState({ ...viewState, zoom: Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, viewState.zoom)) })
-          }
           onClick={(e) => {
             if (import.meta.env.DEV) {
               console.log(`${e.lngLat.lat},${e.lngLat.lng}`);
