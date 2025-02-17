@@ -111,6 +111,7 @@ export const App = () => {
           maxZoom={MAX_ZOOM}
           minZoom={MIN_ZOOM}
           ref={mapRef}
+          initialViewState={{ longitude: STUDENTS.lng, latitude: STUDENTS.lat, zoom: 4 }}
           style={{ height: "calc(100vh - 60px)" }}
           attributionControl={false}
           onClick={(e) => {
