@@ -14,6 +14,10 @@ import { createArc, LngLatLite } from "../utils/geojson";
 import { mapStyle } from "../utils/map";
 import { InfoModal } from "./InfoModal";
 import { Layout } from "./Layout";
+import { sampleSize } from "lodash";
+
+// Show only half of the arcs to improve performance
+const arcLocations = sampleSize(locations, locations.length / 2);
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 7;
@@ -133,7 +137,7 @@ export const App = () => {
             </Marker>
           ))}
 
-          {locations.map((place, index) => (
+          {arcLocations.map((place, index) => (
             <Source key={index} id={`arc-source-${index}`} type="geojson" data={createArc(place.location, STUDENTS)}>
               <Layer
                 id={`arc-layer-${index}`}
