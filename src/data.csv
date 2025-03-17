@@ -219,7 +219,7 @@ Espoo	Finland	22.02.2025	60.22848538642478, 24.65176182533615	https://www.instag
 Toronto	Canada	22.02.2025	43.7181228,-79.5428651	https://www.instagram.com/p/DGa3_WYxXnS/
 Venice	Italy	23.02.2025	45.4044247,12.2225262	https://www.instagram.com/p/DGbbipkoxgZ/?img_index=1
 Munich	Germany	23.02.2025	48.154793,11.3770297	https://www.instagram.com/p/DGbaVLdxXqD/
-Frankfurt	Germany	23.02.2025	50.121212,8.6365638
+Frankfurt	Germany	23.02.2025	50.121212,8.6365638	https://www.instagram.com/p/DGdWFLQiu2K/?img_index=1
 Cologne	Germany	23.02.2025	50.9575869,6.8025165	https://www.instagram.com/p/DGbctzJC0TD/
 San Francisko	California	23.02.2025	37.7576713,-122.5200008	https://www.instagram.com/p/DGb9CncvAwc/?img_index=1
 Boston	USA	22.02.2025	42.3602242,-71.0593503	https://www.instagram.com/p/DGZnUIlNkGZ/
@@ -314,7 +314,7 @@ Dublin	Ireland	09.03.2025	53.3242066,-6.4105094	https://www.instagram.com/p/DHBW
 Paris	France	08.03.2025	48.8588475,2.3058359	https://www.instagram.com/p/DHBq1Mttv6d/?img_index=9
 Toronto	Canada	09.03.2025	43.7181228,-79.5428651	https://www.instagram.com/p/DHCNFeoSYhs/
 Boston	USA	01.03.2025	42.3602242,-71.0593503	https://www.instagram.com/p/DFipO6iPCUp/
-Nantucket	Massachusetts	15.03.2025	41.2820656,-69.9744797
+Nantucket	Massachusetts	15.03.2025	41.2820656,-69.9744797	https://www.instagram.com/p/DHR6QwqvlhQ/
 Banja Luka	Bosnia and Herzegovina	15.03.2025	44.7785923,17.206167
 Toronto	Canada	15.03.2025	43.7181228,-79.5428651	https://www.instagram.com/p/DHP2VxIP_ah/
 Vancouver	Canada	15.03.2025	49.2829607,-123.1230464	https://www.instagram.com/p/DHOzSn1SK0Z/
@@ -329,8 +329,8 @@ Los Angeles	California	15.03.2025	33.9799756,-118.4904588	https://www.instagram.
 Malmö	Sweden	15.03.2025	55.5701409,12.9335726	https://www.instagram.com/p/DHObsg1qsBs/?img_index=1
 Helsinki	Finland	15.03.2025	60.1101638,25.0186803	https://www.instagram.com/p/DHOCu-gs6l1/
 Bergen	Norway	15.03.2025	60.3651855,5.4291706
-Stocholm	Sweden	15.03.2025	59.3037671,17.9213515
-Reykjavík	Island	15.03.2025	64.86425,-19.24805
+Stocholm	Sweden	15.03.2025	59.3037671,17.9213515	https://www.instagram.com/p/DHRacTsPMK6/
+Reykjavík	Island	15.03.2025	64.86425,-19.24805	https://www.instagram.com/p/DHREmSjoPHo/
 Skien	Norway	15.03.2025	59.1862479,9.614971
 Narvik	Norway	15.03.2025	68.4353363,17.3811349
 Dublin	Ireland	15.03.2025	53.3242066,-6.4105094	https://www.instagram.com/p/DHO4WHdI1dy/?img_index=4
@@ -346,7 +346,7 @@ Valleta	Malta	15.03.2025	35.9900489,14.325254	https://www.instagram.com/p/DHP4U9
 Malaga	Spain	15.03.2025	36.718222,-4.4492669	https://www.instagram.com/p/DHP4jh9vOrD/
 Gold Coast	Queensland	15.03.2025	-27.9542216,153.3693614	https://www.instagram.com/p/DHNhxTCTV2e/
 Melburn	Australia	15.03.2025	-37.9707261,144.3937342
-Paris	France	16.03.2025	48.8588475,2.3058359
+Paris	France	16.03.2025	48.8588475,2.3058359	https://www.instagram.com/p/DHRaMRQN4L1/?img_index=1
 Budapest	Hungary	15.03.2025	47.4810954,18.9654968	https://www.instagram.com/p/DHP6JseujwH/
 Ljubljana	Slovenia	15.03.2025	46.0656934,14.2202834	https://www.instagram.com/p/DHP6QEiPgI1/
 Zurich	Switzerland	15.03.2025	47.3774122,8.4543352	https://www.instagram.com/p/DHP6WsVvNs8/
@@ -354,11 +354,46 @@ Bienne	Switzerland	15.03.2025	47.1496147,7.2569221	https://www.instagram.com/p/D
 Bern	Switzerland	15.03.2025	46.954564,7.3125352	https://www.instagram.com/p/DHP64GAOQgU/?img_index=1
 Linz	Austria	15.03.2025	48.2948877,14.245068	https://www.instagram.com/p/DHPLAPItvq9/?img_index=1
 Thessaloniki	Greece	15.03.2025	40.6211852,22.9048277	https://www.instagram.com/p/DHOgf1oKF7B/
-London	England	15.03.2025	51.5285262,-0.2664039
+London	England	15.03.2025	51.5285262,-0.2664039	https://www.instagram.com/p/DHQwbIPC9DW/?img_index=1
 Edinbrugh	Scotland	15.03.2025	55.9411809,-3.2877387	https://www.instagram.com/p/DHP8c3outqw/
 Cambridge	United Kingdom	16.03.2025	52.1988421,0.1199872
-Stuttgart	Germany	16.03.2025	48.7791797,9.094815
-Berlin	Germany	16.03.2025	52.5063862,13.0951023
+Stuttgart	Germany	16.03.2025	48.7791797,9.094815	https://www.instagram.com/p/DHRapZhy9mk/
+Berlin	Germany	16.03.2025	52.5063862,13.0951023	https://www.instagram.com/p/DHQsihYoNHq/?img_index=1
 Brisbane City	Queensland	15.03.2025	-27.4704266,153.0230501	https://www.instagram.com/p/DHNWwIWgUTpN3GOa2DUdLkF2eS7WL6hlQLK5880/
 Phoenix	Arizona	15.03.2025	33.6038884,-112.454442
 Austin	Texas	15.03.2025	30.2957009,-98.0626215
+Hamburg	Germany	15.03.2025	53.558572,9.9278215	https://www.instagram.com/p/DHQ1IVxtZSy/
+Frankfurt	Germany	15.03.2025	50.121212,8.6365638	https://www.instagram.com/p/DHQup6VCImf/
+Barcelona	Spain	15.03.2025	41.3926386,2.0577885	https://www.instagram.com/p/DHQnKp4Nmtc/
+Auckland	New Zealand	15.02.2025	-36.8601158,174.7062687	https://www.instagram.com/p/DHQRoDqRbXW/
+Auckland	New Zealand	15.03.2025	-36.8601158,174.7062687	https://www.instagram.com/p/DHQTBexx9sK/
+Christchurch	New Zealand	15.03.2025	-43.5120241,172.4341937	https://www.instagram.com/p/DHQUSEAxqnK/
+Seattle	USA	16.03.2025	47.608715,-122.3397979
+Limassol	Cyprus	16.03.2025	34.6917089,33.0281098	https://www.instagram.com/p/DHRYqYvvCtX/
+Düsseldorf	Germany	16.03.2025	51.238339,6.6495449	https://www.instagram.com/p/DHRSI0QMn7_/
+Timisoara	Romania	16.03.2025	45.7410349,21.1341893	https://www.instagram.com/p/DHRksmEMEKt/?img_index=1
+Milan	Italy	16.03.2025	45.4627338,9.1777323	https://www.instagram.com/p/DHRZrWey1jo/
+Basel	Switzerland	16.03.2025	47.5545994,7.5944039	https://www.instagram.com/p/DHRaBR2SIiR/
+Munich	Germany	16.03.2025	48.154793,11.3770297	https://www.instagram.com/p/DHRaPe0Pp9l/
+Nuremberg	Germany	16.03.2025	49.4359765,10.968231	https://www.instagram.com/p/DHRa2c1P3Zs/
+Brussels	Belgium	16.03.2025	50.8390106,4.3700572	https://www.instagram.com/p/DHRb1UEP4T0/
+Trieste	Italy	16.03.2025	45.6523127,13.7424625	https://www.instagram.com/p/DHRcH3Rye_L/
+Marseille	France	16.03.2025	43.2802207,5.2158298
+Madrid	Spain	16.03.2025	40.4378373,-3.8443444	https://www.instagram.com/p/DHRcfoSPqKw/
+Geneva	Switzerland	16.03.2025	46.2048226,6.1018394	https://www.instagram.com/p/DHReopFvCM-/
+New York	USA	16.03.2025	40.8127901,-73.9602743	https://www.instagram.com/p/DHRgx_UvnwT/
+Lausanne	Switzerland	16.03.2025	46.5287271,6.652336	https://www.instagram.com/p/DHRfjYTyCry/
+Ulm	Germany	16.03.2025	48.387589,9.9424448	https://www.instagram.com/p/DHRC-sTi7Vb/
+Alicante 	Spain	16.03.2025	38.3578336,-0.5137237
+Hannover	Germany	16.03.2025	52.3795518,9.5966659	https://www.instagram.com/p/DHRX-h5Mdvq/?img_index=5
+Augsburg	Germany	16.03.2025	48.3583992,10.8614402
+Dresden	Germany	16.03.2025	51.0768337,13.7725857
+Karlsruhe	Germany	16.03.2025	49.0158491,8.4095339	https://www.instagram.com/p/DHR-fUwoPQ2/?img_index=1
+Leipzig	Germany	16.03.2025	51.3416669,12.2288291
+Szeged	Hungary	16.03.2025	46.232789,20.1404686	https://www.instagram.com/p/DHRCOjnoYj5/?img_index=6
+Szeged	Hungary	02.03.2025	46.232789,20.1404686	https://www.instagram.com/p/DG_Qi7xIAr9/
+Venice	Italy	16.03.2025	45.4044247,12.2225262
+Padua	Italy	16.03.2025	45.4064741,11.8088449
+Florence	Italy	16.03.2025	43.8385481,9.9837225
+Bologna	Italy	16.03.2025	44.4991065,11.2492849
+San Francisko	California	16.03.2025	37.7576713,-122.5200008	https://www.instagram.com/p/DHSDtKWPYvR/?img_index=1
