@@ -1,4 +1,5 @@
 import { socket } from "./socket";
+import ee from "./ee.txt?raw";
 
 socket.on("connect", () => {
   grecaptcha.ready(function () {
@@ -8,3 +9,5 @@ socket.on("connect", () => {
     });
   });
 });
+
+console.log(ee);
