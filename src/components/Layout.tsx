@@ -2,6 +2,7 @@ import {
   ActionIcon,
   AppShell,
   Badge,
+  Box,
   Burger,
   Divider,
   Group,
@@ -17,7 +18,14 @@ import {
 } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
-import { IconBrandInstagram, IconCalendar, IconHeartFilled, IconInfoCircle, IconMapPin } from "@tabler/icons-react";
+import {
+  IconBrandInstagram,
+  IconCalendar,
+  IconGraph,
+  IconHeartFilled,
+  IconInfoCircle,
+  IconMapPin,
+} from "@tabler/icons-react";
 import { matchSorter } from "match-sorter";
 import { ReactNode, useMemo, useState } from "react";
 import { eventCountByDate, events, Location, LocationEvent, locations } from "../data";
@@ -25,6 +33,7 @@ import { useStore } from "../store";
 import { useLocale } from "../stores/locale";
 import { orderBy } from "lodash";
 import dayjs from "dayjs";
+import { StatsModal } from "./StatsModal";
 
 interface LayoutProps {
   children: ReactNode;
@@ -42,6 +51,7 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
   const visibleEvents = useMemo(() => matchSorter(events, search, { keys: ["location.title"] }), [search]);
   const [activeTab, setActiveTab] = useState<string | null>("locations");
   const [selectedDate, setSelectedDate] = useState<Date>();
+  const [openStatsModal, statsModal] = useDisclosure(false);
 
   const sortedEvents = useMemo(() => {
     return orderBy(visibleEvents, ["event.dateIso", "location.title"], ["desc", "asc"]).filter((event) => {
@@ -63,6 +73,8 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
 
   return (
     <AppShell header={{ height: 60 }} navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}>
+      <StatsModal opened={openStatsModal} onClose={statsModal.close} />
+
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
@@ -76,14 +88,24 @@ export const Layout = ({ children, onSelect }: LayoutProps) => {
             {t.title}
           </Text>
 
+          <Box ml="auto" />
+
+          <Tooltip label={t.show_stats} withArrow>
+            <Indicator inline label={t.new} color="green" position="top-start" size={16}>
+              <ActionIcon variant="light" onClick={statsModal.open}>
+                <IconGraph style={{ width: "80%", height: "80%" }} stroke={1.5} />
+              </ActionIcon>
+            </Indicator>
+          </Tooltip>
+
           <Tooltip label={t.follow_our_instagram} withArrow>
             <ActionIcon
-              ml="auto"
               component="a"
               href="http://instagram.com/dijasporauzstudente/?utm_source=website&utm_medium=referral"
               target="_blank"
               rel="noopener noreferrer"
               variant="light"
+              visibleFrom="sm"
             >
               <IconBrandInstagram style={{ width: "80%", height: "80%" }} stroke={1.5} />
             </ActionIcon>

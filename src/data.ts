@@ -1,5 +1,9 @@
 import { groupBy, map, mapValues, orderBy } from "lodash";
 import csv from "./data.csv?raw";
+import isoWeek from "dayjs/plugin/isoWeek";
+import dayjs from "dayjs";
+
+dayjs.extend(isoWeek);
 
 const rows = csv
   .split("\n")
@@ -63,4 +67,15 @@ export const events = locations.reduce<Event[]>((locations, location) => {
 export const eventCountByDate = mapValues(
   groupBy(rows, (row) => row.dateIso),
   (rows) => rows.length,
+);
+
+export const eventCountByWeek = Object.entries(
+  mapValues(
+    groupBy(rows, (row) => {
+      const date = dayjs(row.dateIso);
+      const week = date.isoWeek().toString().padStart(2, "0");
+      return `${date.isoWeekYear()}-W${week}`;
+    }),
+    (rows) => rows.length,
+  ),
 );

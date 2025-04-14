@@ -12,6 +12,11 @@ export const locale = create("en", {
   open_source_invitation: tpl`This project is open-source. Do you know how to code? Send us a PR on ${arg("GitHub")}. We can't wait for your contribution!`,
   events: "Events",
   locations: "Locations",
+  show_stats: "Show Stats",
+  stats: "Stats",
+  new: "New",
+  event_count_by_week: "Event count by week",
+  stats_disclaimer: tpl`The displayed statistics are based solely on the data we've managed to collect. We cannot guarantee the completeness or accuracy of all information. For any potential errors, feel free to open an issue on our ${arg("GitHub")}.`,
 }).create("sr", {
   language: "Jezik",
   title: "Dijaspora uz studente",
@@ -25,4 +30,9 @@ export const locale = create("en", {
   open_source_invitation: tpl`Ovaj projekat je open-source. Znaš da programiraš? Pošalji nam PR na ${arg("GitHub")}-u. Jedva čekamo da nam se pridružiš!`,
   events: "Kalendar",
   locations: "Mesta",
+  show_stats: "Prikaži statistike",
+  new: "Novo",
+  stats: "Statistike",
+  event_count_by_week: "Broj skupova po nedelji",
+  stats_disclaimer: tpl`Prikazana statistika zasniva se isključivo na podacima koje smo uspeli da prikupimo. Ne možemo garantovati potpunost ni tačnost svih informacija. Za eventualne greške, slobodno otvorite issue na našem ${arg("GitHub")}-u.`,
 });
